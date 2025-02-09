@@ -13,9 +13,9 @@ sources = ["src"]
 [project]
 name = "opm-v2"
 version = "0.1.0"
-description = "qi2lab-OPM control and reconstruction"
+description = "qi2lab-OPM control using pymmcore-gui"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.11"
 license = { text = "BSD-3-Clause" }
 authors = [{ name = "Douglas Shepherd", email = "douglas.shepherd@asu.edu" }]
 # https://pypi.org/classifiers/
@@ -23,15 +23,18 @@ classifiers = [
     "Development Status :: 3 - Alpha",
     "License :: OSI Approved :: BSD License",
     "Programming Language :: Python :: 3",    
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Typing :: Typed",
 ]
 # add your package dependencies here
-dependencies = []
+dependencies = ["pymmcore-plus", "pymmcore-widgets", "matplotlib",
+                "pydaqmx", "pyserial", "scipy", "numba",
+                "pymmcore-gui @ git+https://github.com/pymmcore-plus/pymmcore-gui.git@main"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 # https://peps.python.org/pep-0621/#dependencies-optional-dependencies
 # "extras" (e.g. for `pip install .[test]`)
