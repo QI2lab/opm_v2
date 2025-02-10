@@ -86,16 +86,10 @@ def main() -> None:
     _install_excepthook()
 
     win = MicroManagerGUI()
-    win.setWindowIcon(QIcon(str(ICON)))
+    mmc = win.mmcore
+    mmc.loadSystemConfiguration(Path(r"C:/Users/dpshe/Documents/GitHub/OPMv2/OPM_demo.cfg"))
 
-    # FIXME: be better...
-    try:
-        if args.config:
-            win.mmcore.loadSystemConfiguration(args.config)
-        else:
-            win.mmcore.loadSystemConfiguration(Path(r"C:/Users/dpshe/Documents/GitHub/test_pymmcore/OPM_demo.cfg"))
-    except Exception as e:
-        print(f"Failed to load system configuration: {e}")
+    win.setWindowIcon(QIcon(str(ICON)))
 
     win.showMaximized()
     win.show()
@@ -114,9 +108,7 @@ def main() -> None:
     # --------------------------------------------------------------------------------
 
     widget = win.get_widget(WidgetAction.MDA_WIDGET)
-    mmc = win.mmcore
-    mmc.loadSystemConfiguration(Path(r"C:/Users/dpshe/Documents/GitHub/test_pymmcore/OPM_demo.cfg"))
-
+    
     def custom_execute_mda(output: Path | str | object | None) -> None:
         """Custom execute_mda method that modifies the sequence before running it.
         
@@ -178,6 +170,9 @@ def main() -> None:
 
     def setup_preview_mode_callback():
         """Callback to intercept preview mode and setup the NIDAQ accordingly."""
+
+        image_galvo_range = mmc.getProperty("ImageGalvoMirror", "Position")
+        print(image_galvo_range)
 
         if "Projection" in mmc.getProperty("OPM-mode", "Label"):
             print("projection mode")
